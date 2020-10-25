@@ -27,7 +27,7 @@ void loop() {
     Serial.println("Sending data 6X");
     for (int i = 0; i < 5 ; i++) {
       irsend.sendRaw(Fios_FF, 39, 38);  // Send raw data.
-      client.publish(cmndTopic, "ff x6");
+      client.publish(cmndTopic, "ff");
       button2State = HIGH;
       flashLed();
       delay(250);
