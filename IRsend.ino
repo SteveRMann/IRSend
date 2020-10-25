@@ -1,5 +1,9 @@
+#define SKETCH_NAME "IRSend.ino"
+#define SKETCH_VERSION "Version 2.0 10/24/2020"
+#define hostPrefix "ffBox-"
+
 /* This sketch sends discrete IR codes from a NodeMCU.
- *  
+
    D:\River Documents\Arduino\Arduino Projects\IR\NodeMCU\IRsend
    Board: NodeMCU 1.0
 
@@ -8,9 +12,38 @@
 
    8/30/2018- Added FlashLed()
    9/24/2018- Added second button
+   10/24/2020- Added MQTT publish to send FF or REW codes to the Broadlink IR sender.
 
 
 */
+
+#include "D:\River Documents\Arduino\libraries\Kaywinnet.h"  \\ WiFi credentials
+#include <ESP8266WiFi.h>        // Connect (and reconnect) an ESP8266 to the a WiFi network.
+#include <PubSubClient.h>       // connect to a MQTT broker and publish/subscribe messages in topics.
+
+#define DEBUG true  //set to true for debug output, false for no debug ouput
+#define Serial if(DEBUG)Serial
+#define DBUG
+
+// Declare an object of class WiFiClient, which allows to establish a connection to a specific IP and port
+// Declare an object of class PubSubClient, which receives as input of the constructor the previously defined WiFiClient.
+// The constructor MUST be unique on the network.
+WiFiClient ffBox;
+PubSubClient client(ffBox);
+
+char macBuffer[24];             // Holds the last three digits of the MAC, in hex.
+char hostNamePrefix[] = hostPrefix;
+char hostName[24];              // Holds hostNamePrefix + the last three bytes of the MAC address.
+IPAddress myIP;                 // Holds the IP address
+int rssi;
+
+#define NODENAME "ffBox"                                    // Give this node a name
+const char *cmndTopic = NODENAME "/cmnd";                   // Incoming commands, payload is a command.
+const char *connectName =  NODENAME "1";                    // Must be unique on the network
+const char *mqttServer = mqtt_server;                       // Local broker defined in Kaywinnet.h
+const int mqttPort = 1883;
+
+
 
 
 #ifndef UNIT_TEST
@@ -78,45 +111,4 @@ void flashLed() {
   digitalWrite(D0, HIGH);    //Turn the LED off
 }
 
-//==============================
-void setup() {
-  //Set up button1
-  pinMode(button1Pin, INPUT_PULLUP);
-  pinMode(button2Pin, INPUT_PULLUP);
-  pinMode(D0, OUTPUT);              // Built-in LED
-  digitalWrite(D0, HIGH);           //Turn the LED off
-
-  irsend.begin();
-  Serial.begin(115200, SERIAL_8N1, SERIAL_TX_ONLY);
-}
-
-
-
-//==============================
-void loop() {
-
-  //Button 1, FF
-  button1State = digitalRead(button1Pin);
-  if (button1State == LOW)  //Sends the code once every time the button1 is pressed.
-  {
-    Serial.println("Sending data");
-    irsend.sendRaw(Fios_FF, 39, 38);  // Send raw data.
-    button1State = HIGH;
-    flashLed();
-    delay(150);
-  }
-
-  //Button 2, FF * 6
-  button2State = digitalRead(button2Pin);
-  if (button2State == LOW)  //Sends the code six times every time the button1 is pressed.
-  {
-    Serial.println("Sending data 6X");
-    for (int i = 0; i < 5 ; i++) {
-      irsend.sendRaw(Fios_FF, 39, 38);  // Send raw data.
-      button2State = HIGH;
-      flashLed();
-      delay(150);
-    }
-  }
-
-}
+//main() calls setup() and loop()
