@@ -6,7 +6,7 @@ void setup() {
   pinMode(D0, OUTPUT);              // Built-in LED
   digitalWrite(D0, HIGH);           //Turn the LED off
 
-  irsend.begin();
+  irsend.begin();                   //Why??
   //Serial.begin(115200, SERIAL_8N1, SERIAL_TX_ONLY);
   Serial.begin(115200);
   Serial.println(SKETCH_NAME);

@@ -1,5 +1,5 @@
 #define SKETCH_NAME "IRSend.ino"
-#define SKETCH_VERSION "Version 2.0 10/24/2020"
+#define SKETCH_VERSION "Version 2.1 10/25/2020"
 #define hostPrefix "ffBox-"
 
 /* This sketch sends discrete IR codes from a NodeMCU.
@@ -13,6 +13,7 @@
    8/30/2018- Added FlashLed()
    9/24/2018- Added second button
    10/24/2020- Added MQTT publish to send FF or REW codes to the Broadlink IR sender.
+   10/25/2020- V2.1 Temproarily commented out the IR and just rely on MQTT.
 
 
 */
