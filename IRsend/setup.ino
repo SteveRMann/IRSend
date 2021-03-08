@@ -3,8 +3,8 @@ void setup() {
   //Set up button1
   pinMode(button1Pin, INPUT_PULLUP);
   pinMode(button2Pin, INPUT_PULLUP);
-  pinMode(D0, OUTPUT);              // Built-in LED
-  digitalWrite(D0, HIGH);           //Turn the LED off
+  pinMode(D0, OUTPUT);                  // Built-in LED on GPIOP16
+  digitalWrite(D0, HIGH);               // Turn the LED off
 
   irsend.begin();                   //Why??
   //Serial.begin(115200, SERIAL_8N1, SERIAL_TX_ONLY);

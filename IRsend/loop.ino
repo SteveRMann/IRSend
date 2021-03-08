@@ -25,12 +25,12 @@ void loop() {
   if (button2State == LOW)  //Sends the code six times every time the button1 is pressed.
   {
     Serial.println("Sending data 6X");
-    for (int i = 0; i < 5 ; i++) {
+    for (int i = 0; i < 6 ; i++) {
       //irsend.sendRaw(Fios_FF, 39, 38);  // Send raw data.
       client.publish(cmndTopic, "ff");
       button2State = HIGH;
       flashLed();
-      delay(250);
+      delay(300);
     }
   }
 

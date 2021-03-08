@@ -1,5 +1,5 @@
 #define SKETCH_NAME "IRSend.ino"
-#define SKETCH_VERSION "Version 2.1 10/25/2020"
+#define SKETCH_VERSION "Version 2.2 3/8/2021"
 #define hostPrefix "ffBox-"
 
 /* This sketch sends discrete IR codes from a NodeMCU.
@@ -14,11 +14,16 @@
    9/24/2018- Added second button
    10/24/2020- Added MQTT publish to send FF or REW codes to the Broadlink IR sender.
    10/25/2020- V2.1 Temproarily commented out the IR and just rely on MQTT.
+   03/08/2021- V2.2 Flash LED_BUILTIN while connecting to WiFi.
+                    Flash LED_BUILTIN with each FF pulse.
+                    Extended delay between FF pulses.
+                    Fixed error where we were only sending five FF pulses.
 
 
 */
 
-#include "D:\River Documents\Arduino\libraries\Kaywinnet.h"  \\ WiFi credentials
+//#include "D:\River Documents\Arduino\libraries\Kaywinnet.h"  \\ WiFi credentials
+#include <Kaywinnet.h>          // WiFi credentials
 #include <ESP8266WiFi.h>        // Connect (and reconnect) an ESP8266 to the a WiFi network.
 #include <PubSubClient.h>       // connect to a MQTT broker and publish/subscribe messages in topics.
 
@@ -41,7 +46,7 @@ int rssi;
 #define NODENAME "ffBox"                                    // Give this node a name
 const char *cmndTopic = NODENAME "/cmnd";                   // Incoming commands, payload is a command.
 const char *connectName =  NODENAME "1";                    // Must be unique on the network
-const char *mqttServer = mqtt_server;                       // Local broker defined in Kaywinnet.h
+const char *mqttServer = MQTT_SERVER;                       // Local broker defined in Kaywinnet.h
 const int mqttPort = 1883;
 
 
@@ -107,9 +112,10 @@ int button1State = 0;
 int button2State = 0;
 
 void flashLed() {
-  digitalWrite(D0, LOW);     //Turn the LED on
+  digitalWrite(D0, HIGH);     //Turn the LED off
   delay(60);
-  digitalWrite(D0, HIGH);    //Turn the LED off
+  digitalWrite(D0, LOW);      //Turn the LED on
 }
+
 
 //main() calls setup() and loop()
