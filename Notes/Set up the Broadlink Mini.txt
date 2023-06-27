@@ -1,0 +1,60 @@
+Set up the Broadlink Mini
+
+1) Press Reset until the blue LED is flashing quickly.
+2) Open the IHC App on the phone
+3) Click on + then Add Device.
+4) Select "Universal Remote"
+5) Select RM Mini 3.
+   The App will scan for new devices.
+6) When found, you can select the Network credentials.
+7) After a few seconds, the LED stops the fast blink
+   You can give the remote a name now.
+8) Use an IP scanner to find the IP of the Broadlink device.
+   Hint: Sort on the manufacturer and search for "HangZhou Gubei Electronics Technology Co.,Ltd"
+9) In the router- make the IP Static, because the IP is hard coded in Home Assistant.
+10) You can close the IHC app on the phone.
+11) Save the IP address and MAC address - you will need them in Home Assistant.
+
+Open switches.yaml
+
+The section for the Broadlink devices should look like this:
+
+# Family Room Broadlink
+  - platform: broadlink
+    friendly_name: Family Room
+    host: 192.168.1.53
+    mac: '78:0F:77:5A:E3:F0'
+    type: rm2_pro_plus
+    switches: !include broadlink_Family_Room.yaml
+
+# Office Broadlink.
+  - platform: broadlink
+    friendly_name: Office
+    host: 192.168.1.40
+    mac: '78:0F:77:48:30:DE'
+    type: rm2_pro_plus
+    switches: !include broadlink_Office.yaml
+	
+* Save switches.yaml, check the config then restart Home Assistant.
+* In <> (States), find a convenient switch to test the Broadlink.
+:    I use "switch.kenmorefan_family_room_power" or "switch.kenmorefan_office_power" because I can test
+:	both Broadlnks in the office.
+* In Services, enter one of the Broadlink switch entity names into the Services page.
+:    The service to call is switch.turn.on
+* Click on "Call Service" and the fan should turn on or off.  (On and off are the same code).
+
+
+
+Test:
+Use the script to send commands.
+ 
+ 
+
+IP Scan:
+192.168.1.40	HangZhou Gubei Electronics Technology Co.,Ltd	78:0F:77:48:30:DE	Broadlink in office
+192.168.1.53	HangZhou Gubei Electronics Technology Co.,Ltd	78:0F:77:5A:E3:F0	Broadlink in Family Room
+
+
+Erratta:
+https://www.inspectmygadgets.com/broadlink-rm-mini-ir-blaster-with-home-assistant/
+https://www.hackster.io/ccxx/broadlink-rm-mini-3-from-broadlink-3323-to-esp8266-cc1493?f=1
