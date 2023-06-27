@@ -2,7 +2,8 @@
 #define SKETCH_VERSION "Version 2.2 3/8/2021"
 #define hostPrefix "ffBox-"
 
-/* This sketch sends discrete IR codes from a NodeMCU to a Broadlink Mini 3.
+/* This sketch sends discrete IR codes from a NodeMCU to Node Red using
+   MQTT. Node-Red sends the codes to a Broadlink Mini 3.
 
    D:\River Documents\Arduino\Arduino Projects\IR\NodeMCU\IRsend
    Board: NodeMCU 1.0
