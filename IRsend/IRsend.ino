@@ -6,10 +6,7 @@
    MQTT. Node-Red sends the codes to a Broadlink Mini 3.
 
    D:\River Documents\Arduino\Arduino Projects\IR\NodeMCU\IRsend
-   Board: NodeMCU 1.0
-
-   Arduino IDE settings for NodeMCU:
-     Board: NodeMCU 1.0 (ESP12-E Module)
+   Board: NodeMCU 1.0 (ESP12E Module)
 
    8/30/2018- Added FlashLed()
    9/24/2018- Added second button
@@ -111,11 +108,14 @@ const int button1Pin = 5;        //GPIO5 (D1)
 const int button2Pin = 4;        //GPIO4 (D2)
 int button1State = 0;
 int button2State = 0;
+const int BLUELED = D0;
+#define LEDON LOW
+#define LEDOFF HIGH
 
 void flashLed() {
-  digitalWrite(D0, HIGH);     //Turn the LED off
+  digitalWrite(BLUELED, LEDON);       //Turn the LED off
   delay(60);
-  digitalWrite(D0, LOW);      //Turn the LED on
+  digitalWrite(BLUELED, LEDOFF);      //Turn the LED on
 }
 
 

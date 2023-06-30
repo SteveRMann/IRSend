@@ -32,7 +32,7 @@ void setup_wifi() {
   WiFi.begin(MY_SSID, MY_PASSWORD);
   while (WiFi.status() != WL_CONNECTED) {
     //Toggle the blue LED
-    digitalWrite(D0, ledState);
+    digitalWrite(BLUELED, ledState);
     ledState = !ledState;
     delay(400);
     Serial.print(WiFi.status()); Serial.print(F(" "));
@@ -43,7 +43,7 @@ void setup_wifi() {
   Serial.print(F("IP address: "));
   Serial.println(WiFi.localIP());
   //Turn blue LED on, indicating "connected"
-  digitalWrite(D0, LOW);
+  digitalWrite(BLUELED, LOW);
 
   // Get the last three numbers of the mac address.
   // "4C:11:AE:0D:83:86" becomes "0D8386" in macBuffer.
