@@ -17,9 +17,10 @@
 
 void setup_wifi() {
 #ifndef Kaywinnet
-#include "D:\River Documents\Arduino\libraries\kaywinnet.h"
+#include <Kaywinnet.h>              // WiFi credentials
 #endif
-  byte mac[6];                     //// the MAC address of your Wifi shield
+
+  byte mac[6];                      // the MAC address of your Wifi shield
   int ledState = HIGH;              // LED off
 
   Serial.println(F("\n"));
@@ -28,7 +29,6 @@ void setup_wifi() {
 
 
   WiFi.mode(WIFI_STA);
-  WiFi.enableInsecureWEP();
   WiFi.begin(MY_SSID, MY_PASSWORD);
   while (WiFi.status() != WL_CONNECTED) {
     //Toggle the blue LED
@@ -44,6 +44,7 @@ void setup_wifi() {
   Serial.println(WiFi.localIP());
   //Turn blue LED on, indicating "connected"
   digitalWrite(BLUELED, LOW);
+
 
   // Get the last three numbers of the mac address.
   // "4C:11:AE:0D:83:86" becomes "0D8386" in macBuffer.

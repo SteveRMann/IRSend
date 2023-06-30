@@ -50,16 +50,16 @@
 
 void mqttConnect() {
   while (!client.connected()) {
-    Serial.print(F("MQTT connection..."));
+    //Serial.print(F("MQTT connection..."));
     if (client.connect(connectName)) {
-      Serial.println(F("connected"));
+      ///Serial.println(F("connected"));
 
       //Subscriptions:
       client.subscribe(cmndTopic);
-      Serial.print(F("Subscribing to "));
-      Serial.println(cmndTopic);
+      ///Serial.print(F("Subscribing to "));
+      ///Serial.println(cmndTopic);
     } else {
-      Serial.print(F("failed, rc="));
+      Serial.print(F("MQTT connect failed, rc="));
       Serial.print(client.state());
       Serial.println(F("- trying again in 5-seconds."));
       delay(5000);
